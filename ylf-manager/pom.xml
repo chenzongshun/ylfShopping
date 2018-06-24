@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.czs</groupId>
+    <artifactId>ylf-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.czs</groupId>
+  <artifactId>ylf-manager</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  
+  <dependencies>					<!-- manager依赖common，所以直接添加common的坐标，然后继承了manager这个父工程的子模块就会传递依赖了 -->
+  	<dependency>
+  		<groupId>com.czs</groupId>
+		<artifactId>ylf-common</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
+  
+	<build/>
+	
+  <modules>
+  	<module>ylf-manager-pojo</module>
+  	<module>ylf-manager-dao</module>
+  	<module>ylf-manager-interface</module>
+  	<module>ylf-manager-service</module><!-- 
+  	<module>ylf-manager-web</module> -->
+  </modules>
+</project>

@@ -1,0 +1,45 @@
+package com.shun.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.shun.mapper.TbItemMapper;
+import com.shun.pojo.TbItem;
+import com.shun.pojo.TbItemExample;
+import com.shun.pojo.TbItemExample.Criteria;
+import com.shun.service.ItemService;
+
+/**
+ * @author czs
+ * @version 创建时间：2018年5月3日 上午9:33:32
+ */
+@Service
+public class ItemServiceImpl implements ItemService {
+
+	@Autowired
+	private TbItemMapper itemMapper;
+
+	@Override
+	public TbItem getItemById(long itemId) {
+		// 直接根据逆向工程提供的主键查询
+		// return itemMapper.selectByPrimaryKey(itemId);
+		// 还可以设置查询条件
+		TbItemExample example = new TbItemExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andIdEqualTo(itemId);
+		List<TbItem> resultList = null;
+		try {
+			resultList = itemMapper.selectByExample(example);
+		} catch (Exception e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		if (resultList != null && resultList.size() > 0) {
+			return resultList.get(0);
+		}
+		return null;
+	}
+
+}

@@ -1,0 +1,3 @@
+com\shun\sso\controller\TokenController.class
+com\shun\sso\controller\LoginController.class
+com\shun\sso\controller\RegisterController.class

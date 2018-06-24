@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context" 
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:aop="http://www.springframework.org/schema/aop" 
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						   http://www.springframework.org/schema/context 
+						   http://www.springframework.org/schema/context/spring-context-4.0.xsd
+						   http://www.springframework.org/schema/aop 
+						   http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+						   http://www.springframework.org/schema/tx 
+						   http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+						   http://www.springframework.org/schema/util 
+						   http://www.springframework.org/schema/util/spring-util-4.0.xsd
+						   http://code.alibabatech.com/schema/dubbo 
+						   http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<!-- spring 可以自动去扫描 base-package下面的包或子包下面的Java文件，如果扫描到有Spring的相关注解的类，则把这些类注册为Spring的bean -->
+	<context:component-scan base-package="com.shun.spContent.service"/>
+	
+	<!-- 使用dubbo发布服务 -->
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="ylf-manager" />
+	<!-- 使用zookeeper作为注册中心，这个注册中心放在linux机上，记得启动 https://blog.csdn.net/qq_36138324/article/details/80197802 -->
+	<dubbo:registry protocol="zookeeper" address="${zookeeper.ipAndProt}" />
+	<!-- 用dubbo协议默认在20880端口暴露服务，默认端口是20880-由于ylf-mannager-service中已经有占用了一个20880了，所以这里加个1把 -->
+	<dubbo:protocol name="dubbo" port="20881" />
+	<!-- 声明需要暴露的服务接口，引用的itemServiceImpl来自于spring自动扫描到的实现类，实现类的类名上写了@Service --> 
+	<dubbo:service interface="com.shun.spContent.service.ContentCategoryService" ref="contentCategoryServiceImpl" timeout="1200" />
+	<dubbo:service interface="com.shun.spContent.service.ContentService" ref="contentServiceImpl" timeout="1200" />
+	
+</beans>

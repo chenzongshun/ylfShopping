@@ -1,0 +1,141 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.czs</groupId>
+    <artifactId>ylf-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.czs</groupId>
+  <artifactId>ylf-portal-web</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  
+	
+  <dependencies>
+
+	<!-- 但还要jsp、servlet、文件上传等等 -->
+	<!-- JSP相关 -->
+	<dependency>
+		<groupId>jstl</groupId>
+		<artifactId>jstl</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>servlet-api</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jsp-api</artifactId>
+		<scope>provided</scope>
+	</dependency>
+
+
+	<!-- log4j日志文件管理包 -->
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.17</version>
+	</dependency>
+	
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		
+		<!-- dubbo相关 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.jboss.netty</groupId>
+					<artifactId>netty</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+		</dependency>		<!-- 出现java.lang.NoClassDefFoundError: org/apache/curator/RetryPolicy错误时加的 -->
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-framework</artifactId>
+			<version>4.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.pagehelper</groupId>
+			<artifactId>pagehelper</artifactId>
+		</dependency>
+		<!-- 文件上传组件 -->
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+		</dependency>
+  	<dependency>
+  		<groupId>com.czs</groupId>
+  		<artifactId>ylf-spContent-interface</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.github.tobato/fastdfs-client --><!-- 
+		<dependency>
+		    <groupId>com.github.tobato</groupId>
+		    <artifactId>fastdfs-client</artifactId>
+		    <version>1.26.2</version>
+		</dependency> -->
+    
+  </dependencies>
+  
+  	<build>
+		<plugins>
+			<!-- 配置Tomcat插件 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<configuration>
+					<port>8083</port>	<!-- 端口直接可以在这里进行修改 -->
+					<path>/</path>		<!-- 配置斜杠能够达到默认访问localhost:8080就可以访问项目的目的 -->
+					<url>http://118.89.226.190:8081/manager/text</url>
+					<username>tomcat</username>
+					<password>tomcat</password>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	
+</project>

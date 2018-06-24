@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.czs</groupId>
+    <artifactId>ylf-manager</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>ylf-manager-dao</artifactId>
+  
+  <!-- 由于dao层许多方法，这里面的方法的返回值可能是pojo类型，所以需要依赖pojo，直接引入pojo的坐标 -->
+  <dependencies>
+  	<dependency>
+	  	<groupId>com.czs</groupId>
+  		<artifactId>ylf-manager-pojo</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  	
+			<!-- Mybatis -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.github.miemiedev</groupId>
+				<artifactId>mybatis-paginator</artifactId>
+			</dependency>
+			<dependency>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper</artifactId>
+			</dependency>
+			<!-- MySql -->
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+			</dependency>
+			<!-- 连接池 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid</artifactId>
+			</dependency>
+  </dependencies>
+  
+	<!-- 因为maven默认不编译xml文件，如果不加会导致 org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): -->
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+
+</project>

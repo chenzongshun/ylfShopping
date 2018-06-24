@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context" 
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:aop="http://www.springframework.org/schema/aop" 
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+						   http://www.springframework.org/schema/context 
+						   http://www.springframework.org/schema/context/spring-context-4.0.xsd
+						   http://www.springframework.org/schema/aop 
+						   http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+						   http://www.springframework.org/schema/tx 
+						   http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+						   http://www.springframework.org/schema/util 
+						   http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+	
+	<!-- 数据库连接池 -->
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:conf/*.properties" />
+	<!-- 数据库连接池 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="driverClassName" value="${jdbc.driver}" />
+		<property name="maxActive" value="10" />
+		<property name="minIdle" value="5" />
+	</bean>
+	
+	<!-- 让spring管理sqlsessionfactory 使用mybatis和spring整合包中的 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 数据库连接池 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 加载mybatis的全局配置文件 -->
+		<property name="configLocation" value="classpath:mybatis/sqlMapConfig.xml" />
+	</bean><!-- 
+	扫描包，虽然这个包没有在这个工程里面，但是和它同级别的dao工程里面有这个包，当前的web项目打包方式是war
+	而dao这个项目的打包方式是jar，而将来web项目会打成一个war包，dao将会以jar包的形式存在于web项目的lib里面
+	那么那个时候mapperdao里面的包路径还是不变，所以这样扫描没有错 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.shun.mapper,com.shun.search.mapper" />
+	</bean>
+</beans>

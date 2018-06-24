@@ -1,0 +1,3 @@
+com\shun\sso\service\TokenService.class
+com\shun\sso\service\LoginService.class
+com\shun\sso\service\RegisterService.class

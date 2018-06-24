@@ -1,0 +1,27 @@
+package com.shun.service;
+
+import com.shun.common.pojo.EasyUiDataGridResult;
+import com.shun.pojo.TbItem;
+
+/**
+* @author czs
+* @version 创建时间：2018年5月3日 上午9:31:11 
+* 这个类对应了数据库的商品表
+*/
+public interface ItemService {
+
+	/**
+	 * 获得一个商品对象
+	 * @param itemId
+	 * @return
+	 */
+	TbItem getItemById(long itemId);
+	
+	/**
+	 * 为EasyUi的表格准备数据
+	 * @param currentPage 当前页
+	 * @param rows 数据集
+	 * @return
+	 */
+	EasyUiDataGridResult getItemList(int currentPage,int rows);
+}

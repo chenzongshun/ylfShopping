@@ -1,0 +1,57 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.czs</groupId>
+    <artifactId>ylf-manager</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>ylf-manager-web</artifactId>
+  <packaging>war</packaging>
+  
+	<!-- log4j日志文件管理包版本 -->
+	<properties>
+		<slf4j.version>1.7.7</slf4j.version>
+		<log4j.version>1.2.17</log4j.version>
+	</properties>
+
+
+  <dependencies>
+  	<dependency>			<!-- 要调用到service，所以需要依赖service -->
+  		<groupId>com.czs</groupId>
+	    <artifactId>ylf-manager-service</artifactId>
+	    <version>0.0.1-SNAPSHOT</version>
+  	</dependency><!-- 
+  	这了需要用到pojo，但不用再依赖pojo了，因为这里依赖了service
+	然后service已经依赖了dao，而dao又依赖了pojo，它们之间是有依赖传递的 -->
+
+	<!-- 但还要jsp、servlet、文件上传等等 -->
+	<!-- JSP相关 -->
+	<dependency>
+		<groupId>jstl</groupId>
+		<artifactId>jstl</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>servlet-api</artifactId>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>jsp-api</artifactId>
+		<scope>provided</scope>
+	</dependency>
+
+
+	<!-- log4j日志文件管理包 -->
+	<dependency>
+		<groupId>log4j</groupId>
+		<artifactId>log4j</artifactId>
+		<version>1.2.17</version>
+	</dependency>
+    
+  </dependencies>
+  
+  
+  
+  <build/>
+</project>

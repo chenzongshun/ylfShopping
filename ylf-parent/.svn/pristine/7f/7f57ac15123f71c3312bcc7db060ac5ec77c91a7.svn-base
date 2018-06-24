@@ -1,0 +1,64 @@
+1、注意这个项目需要改动的地方有数据库地址，以及dubbo的注册中心主机地址
+
+2、使用pageHelper分页
+	测试版：		List<TbItem> items = itemMapper.selectByExample(new TbItemExample());
+		在com.shun.test.PageHelperTest
+	使用：		return ItemService.getItemList(page, rows);
+		在com.shun.controller.ItemController
+		
+3、使用FastDfsClient的工具类来上传图片到图片服务器		System.out.println(uploadFile);
+	在：com.shun.common.utils.FastDFSClientUtils			详细的使用在/ylf-manager-web/src/test/java/com/shun/test/FastDfsTest.java
+
+4、用jackJson转换各种对象成String	的工具类				用jackJson转换各种对象成String
+	在：com.shun.common.utils.JacksonUtils
+
+5、
+
+6、
+
+7、
+
+8、
+
+9、
+
+10、
+
+11、
+
+12、
+
+13、
+
+14、
+
+15、
+
+16、
+
+17、
+
+18、
+
+19、
+
+20、
+
+21、
+
+22、
+
+23、
+
+24、
+
+25、
+
+26、
+
+27、
+
+28、
+
+29、
+

@@ -1,0 +1,88 @@
+package com.shun.service.impl;
+
+import java.util.Date;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.shun.common.pojo.EasyUiDataGridResult;
+import com.shun.common.pojo.my商品上传成功后的返回处理类;
+import com.shun.common.pojo.my生成ID;
+import com.shun.mapper.TbItemMapper;
+import com.shun.pojo.TbItem;
+import com.shun.pojo.TbItemDesc;
+import com.shun.pojo.TbItemExample;
+import com.shun.service.ItemService;
+
+/**
+ * @author czs
+ * @version 创建时间：2018年5月3日 上午9:33:32
+ */
+@Service
+public class ItemServiceImpl implements ItemService {
+
+	@Autowired
+	private TbItemMapper itemMapper;
+
+	@Override
+	public TbItem getItemById(long itemId) {
+		// 直接根据逆向工程提供的主键查询
+		return itemMapper.selectByPrimaryKey(itemId);
+		// 还可以设置查询条件
+//		TbItemExample example = new TbItemExample();
+//		Criteria criteria = example.createCriteria();
+//		criteria.andIdEqualTo(itemId);
+//		List<TbItem> resultList = null;
+//		try {
+//			resultList = itemMapper.selectByExample(example);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		if (resultList != null && resultList.size() > 0) {
+//			return resultList.get(0);
+//		}
+//		return null;
+	}
+
+	@Override
+	public EasyUiDataGridResult getItemList(int currentPage, int rows) {
+		// 设置分页数据
+		PageHelper.startPage(currentPage, rows);
+		
+		// 查询分页信息
+		List<TbItem> items = itemMapper.selectByExample(new TbItemExample());
+		
+		// 分装pageInfo对象
+		PageInfo<TbItem> pageInfo = new PageInfo<TbItem>(items);
+		
+		// 创建返回对象并分装参数
+		EasyUiDataGridResult result = new EasyUiDataGridResult();
+		result.setTotal(pageInfo.getTotal());
+		result.setRows(items);
+		return result;
+	}
+
+	@Override
+	public my商品上传成功后的返回处理类 addItem(TbItem item, String desc) {
+		
+		// 开始封装商品的实体
+		long itemId = my生成ID.genItemId();
+		item.setId(itemId);
+		// '商品状态，1-正常，2-下架，3-删除',
+		item.setStatus((byte) 1);		
+		item.setUpdated(new Date());
+		item.setCreated(new Date());
+		// 保存到数据库
+		itemMapper.insert(item);
+		
+		// 开始封装商品详细表的实体并保存到数据库
+		TbItemDesc itemDesc = new TbItemDesc();
+		itemDesc.setCreated(new Date());
+		itemDesc.setUpdated(new Date());
+		itemDesc.setItemId(itemId);	// 这个id一定要是商品的id 
+		itemDesc.setItemDesc(desc);
+		
+		return my商品上传成功后的返回处理类.ok();
+	}
+}

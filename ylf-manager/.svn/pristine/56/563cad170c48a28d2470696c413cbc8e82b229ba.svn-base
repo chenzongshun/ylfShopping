@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+				           http://www.springframework.org/schema/mvc 
+				           http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+				           http://www.springframework.org/schema/context 
+				           http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+	
+	<!-- spring 可以自动去扫描 base-package下面的包或子包下面的Java文件，如果扫描到有Spring的相关注解的类，则把这些类注册为Spring的bean -->
+	<context:component-scan base-package="com.shun.controller"/>
+		
+	<!-- 配置注解驱动，用来配置量两大组件
+	<mvc:annotation-driven /> 是一种简写形式，完全可以手动配置替代这种简写形式，简写形式可以让初学都快速应用默认配置方案。
+	<mvc:annotation-driven /> 会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 两个bean
+	是spring MVC为@Controllers分发请求所必须的，即解决了@Controller注解使用的前提配置。
+  	同时它还提供了：数据绑定支持，@NumberFormatannotation支持，@DateTimeFormat支持，@Valid支持
+  	读写XML的支持（JAXB，读写JSON的支持（Jackson）。
+  	我们处理响应ajax请求时，就使用到了对json的支持（配置之后，在加入了jackson的core和mapper包之后，不写配置文件也能自动转换成json） -->
+	<mvc:annotation-driven/>
+		
+	<!-- 配置视图解释器加上上面的mvc:annotation-driven就叫做三大组件 --> 
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 放行静态资源 	如js/jquery.dataTables.min.js  -->
+	<mvc:resources location="/css/" mapping="/css/**"/>
+	<mvc:resources location="/js/" mapping="/js/**"/>
+	<mvc:resources location="/fonts/" mapping="/fonts/**"/>
+</beans>

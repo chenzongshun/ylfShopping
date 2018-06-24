@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" 
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						   http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+				           http://www.springframework.org/schema/mvc 
+				           http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+				           http://www.springframework.org/schema/context 
+				           http://www.springframework.org/schema/context/spring-context-4.0.xsd
+				           http://code.alibabatech.com/schema/dubbo 
+				           http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<!-- spring 可以自动去扫描 base-package下面的包或子包下面的Java文件，如果扫描到有Spring的相关注解的类，则把这些类注册为Spring的bean -->
+	<context:component-scan base-package="com.shun.item"/>
+	<context:property-placeholder location="classpath:conf/resource.properties"/>
+	<!-- 不能配置多个context:property-placeholder来加载properties，如要加载多个properties可以在location属性里面用逗号分割开来 -->
+		
+	<!-- 配置注解驱动，用来配置量两大组件
+	<mvc:annotation-driven /> 是一种简写形式，完全可以手动配置替代这种简写形式，简写形式可以让初学都快速应用默认配置方案。
+	<mvc:annotation-driven /> 会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 两个bean
+	是spring MVC为@Controllers分发请求所必须的，即解决了@Controller注解使用的前提配置。
+  	同时它还提供了：数据绑定支持，@NumberFormatannotation支持，@DateTimeFormat支持，@Valid支持
+  	读写XML的支持（JAXB，读写JSON的支持（Jackson）。
+  	我们处理响应ajax请求时，就使用到了对json的支持（配置之后，在加入了jackson的core和mapper包之后，不写配置文件也能自动转换成json） -->
+	<mvc:annotation-driven/>
+		
+	<!-- 配置视图解释器加上上面的mvc:annotation-driven就叫做三大组件 --> 
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp/"/><!-- 前缀 -->
+		<property name="suffix" value=".jsp"/><!-- 后缀 -->
+	</bean>
+	
+	<!-- 引用dubbo服务 -->
+	<dubbo:application name="ylf-item"/>
+	<!-- 服务器地址一旦更改，那么这里记得一定要更换，还有一个地方在db.properties文件里面就，servie项目注册服务到了注册中心，这里就要像注册中心发送请求 -->
+	<dubbo:registry protocol="zookeeper" address="118.89.226.190:2181"/>
+	<dubbo:reference interface="com.shun.service.ItemService" id="itemService" timeout="12000"/>
+	
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/ftl/" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	
+</beans>

@@ -1,0 +1,196 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.czs</groupId>
+    <artifactId>ylf-search</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>ylf-search-service</artifactId>
+  <packaging>war</packaging>
+    
+	<dependencies>
+		<dependency>
+			<groupId>com.czs</groupId>
+			<artifactId>ylf-manager-dao</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>		<!-- 用到interface所以需要依赖interface -->
+			<groupId>com.czs</groupId>
+			<artifactId>ylf-search-interface</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<!-- 服务层需要用到spring，所以要依赖 -->
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency><!-- 
+			<dependency>
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper</artifactId>
+			</dependency> -->
+		<!-- dubbo相关 -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework</groupId>
+					<artifactId>spring</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.jboss.netty</groupId>
+					<artifactId>netty</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.zookeeper</groupId>
+			<artifactId>zookeeper</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.sgroschupf</groupId>
+			<artifactId>zkclient</artifactId>
+		</dependency>
+		<!-- 出现java.lang.NoClassDefFoundError: org/apache/curator/RetryPolicy错误时加的 -->
+		<dependency>
+			<groupId>org.apache.curator</groupId>
+			<artifactId>curator-framework</artifactId>
+			<version>4.0.1</version>
+		</dependency>    
+		<!-- Redis客户端 -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+<!-- 
+ <dependency>
+    <groupId>org.apache.solr</groupId>
+    <artifactId>solr-solrj</artifactId>
+    <version>6.5.1</version>
+</dependency> -->
+<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+<!-- <dependency>
+    <groupId>org.apache.solr</groupId>
+    <artifactId>solr-solrj</artifactId>
+    <version>7.2.1</version>
+</dependency> -->
+<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+<!-- <dependency>
+    <groupId>org.apache.solr</groupId>
+    <artifactId>solr-solrj</artifactId>
+    <version>7.1.0</version>
+</dependency> -->
+<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+<!-- <dependency>
+    <groupId>org.apache.solr</groupId>
+    <artifactId>solr-solrj</artifactId>
+    <version>7.0.0</version>
+</dependency>
+ -->
+<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+<dependency>
+    <groupId>org.apache.solr</groupId>
+    <artifactId>solr-solrj</artifactId>
+    <version>6.6.4</version>
+</dependency>
+<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj --><!-- 
+<dependency>
+    <groupId>org.apache.solr</groupId>
+    <artifactId>solr-solrj</artifactId>
+    <version>7.0.0</version>
+</dependency> -->
+
+
+<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-test-framework -->
+
+<!-- 	<dependency>
+    <groupId>org.apache.solr</groupId>
+    <artifactId>solr-test-framework</artifactId>
+    <version>7.3.1</version>
+    <scope>test</scope>
+</dependency>
+ -->
+		<!-- activeMq的三个依赖 -->
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-all</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<!-- 配置Tomcat插件 -->
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<configuration>
+					<port>8085</port>	<!-- 端口直接可以在这里进行修改 -->
+					<path>/ylf-search</path>		<!-- 配置斜杠能够达到默认访问localhost:8080就可以访问项目的目的 -->
+					<url>http://118.89.226.190:8081/manager/text</url>
+					<username>tomcat</username>
+					<password>tomcat</password>
+				</configuration>
+			</plugin>
+		</plugins>
+		
+		<!-- 因为maven默认不编译xml文件，如果不加会导致 org.apache.ibatis.binding.BindingException: Invalid bound statement (not found): -->
+		<resources>
+			<resource>
+				<directory>src/main/java</directory>
+				<!-- 2018年5月26日20:56:05，同样又犯了这个错误，根据笔记追溯到这里，再次补充！ 
+				  需要注意的是，如果出除了这个目录以为还有其它目录里面有配置文件的话，那么一定要再次配置一个resource节点， 
+				  因为添加了这个会改变mybatis的默认行为，它会认为所有的配置文件都在那个文件夹下面所以，需要再次配置一个resource节点，把其它存在配置文件的路径也配置进去 -->
+				<includes>
+					<include>**/*.xml</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.xml</include>
+					<include>**/*.properties</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	
+	
+	</build>
+</project>
